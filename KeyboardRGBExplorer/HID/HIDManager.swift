@@ -25,6 +25,19 @@ final class HIDManagerHelper {
             IOOptionBits(kIOHIDOptionsTypeNone)
         )
     }
+    
+    //MARK: Open Device
+    func open(_ device: IOHIDDevice) -> Bool {
+
+        let result = IOHIDDeviceOpen(
+            device,
+            IOOptionBits(kIOHIDOptionsTypeNone)
+        )
+
+        Log.info("IOHIDDeviceOpen : \(result)")
+
+        return result == kIOReturnSuccess
+    }
 
     // MARK: - Device Scan
 
@@ -92,9 +105,20 @@ final class HIDManagerHelper {
             )
 
             devices.append(info)
+            
+            if open(device) {
+
+                Log.success("Device Opened")
+
+            } else {
+
+                Log.error("Cannot Open Device")
+            }
         }
 
         Log.success("Found \(devices.count) HID Device(s)")
+        
+        
 
         return devices
     }

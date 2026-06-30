@@ -34,7 +34,7 @@ final class HIDDeviceFinder {
 
         for device in devices {
             Log.success("Keyboard HID Device Found 🎯")
-            RGBController.shared.setDevice(device)
+            //RGBController.shared.setDevice(device)
         }
     }
 }
