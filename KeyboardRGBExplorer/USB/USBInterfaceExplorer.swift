@@ -6,6 +6,18 @@
 //
 
 import Foundation
-func start() {
-    print("USB Explorer - Phase 4")
+import Foundation
+import IOKit
+import IOKit.usb
+
+final class USBInterfaceExplorer {
+
+    func explore() {
+
+        Log.title("USB Interface Explorer")
+
+        Log.info("Searching USB Interfaces...")
+
+ 
+    }
 }

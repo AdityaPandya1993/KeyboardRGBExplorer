@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 
 let helper = HIDManagerHelper()
 let scanner = HIDDeviceScanner()
@@ -15,6 +14,13 @@ let outputTester = HIDOutputTester()
 let monitor = HIDInputMonitor()
 let usbExplorer = USBDeviceExplorer()
 let devices = helper.scanDevices()
+let interfaceExplorer = USBInterfaceExplorer()
+let endpointExplorer = USBEndpointExplorer()
+let finder = USBVendorInterfaceFinder()
+let opener = USBInterfaceOpener()
+
+//coumitcate ... USB KeyBaord
+let controlTransfer = USBControlTransfer()
 
 
 Log.title("Scanning HID Devices")
@@ -51,10 +57,13 @@ for (index, info) in devices.enumerated() {
 
 // USB Explorer (Future Phase)
 usbExplorer.start()
-
+interfaceExplorer.explore()
+endpointExplorer.start()
+finder.start()
+opener.start()
+controlTransfer.start()
 RunLoop.current.run()
 
 //usbExplorer.start()
-
 
 
