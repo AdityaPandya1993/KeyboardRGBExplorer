@@ -7,8 +7,94 @@
 
 import Foundation
 
+let helper = HIDManagerHelper()
+let handshake = RGBHandshake()
+let mapper = RGBCommandMapper()
+
+let devices = helper.scanDevices()
+
+
+for info in devices {
+
+    guard info.vendorID == 0xC0F4,
+          info.productID == 0x07C0,
+          info.usagePage == 1,
+          info.usage == 6 else {
+        continue
+    }
+
+    mapper.start(device: info.device)
+}
+
+RunLoop.current.run()
+
+//=========================================================================================================================
+/*
+let helper = HIDManagerHelper()
+let scanner = HIDDeviceScanner()
+let packetMapper = RGBPacketMapper()
+let RGBComman0BExpore = RGBCommandExplorer()
+let handshake = RGBHandshake() // Perfect to start static RGB Light all in Keyboard
+//let packetExplorer = RGBPacketExplorer() // Findout RGB Lights On Packet 04 to 07
+
+let devices = helper.scanDevices()
+let sender = RGBPacketSender()
+var packet = [UInt8](repeating: 0, count: 64)
+
+
+
+for info in devices {
+    
+    print("====================")
+    print("Manufacturer: \(info.manufacturer)")
+    print("Product: \(info.product)")
+    print("Vendor ID: \(info.vendorID)")
+    print("Product ID: \(info.productID)")
+    print("Usage Page: \(info.usagePage)")
+    print("Usage: \(info.usage)")
+    print("====================")
+    
+    guard info.vendorID == 0xC0F4,
+          info.productID == 0x07C0,
+          info.usagePage == 1,
+          info.usage == 6 else {
+        
+        Log.warning("Skipping non-RGB interface")
+        continue
+    }
+    
+    Log.success("RGB Interface Found")
+    
+    handshake.start(device: info.device)
+
+    Thread.sleep(forTimeInterval: 0.5)
+ 
+ */
+//====================================================================================================
+//    sender.sendReport(
+//        command: 0x08,
+//        payload: [],
+//        to: info.device
+//    )
+    
+    
+//    Thread.sleep(forTimeInterval: 0.3)
+//    packet[0] = 0x08
+//
+//    
+//    sender.sendRaw(
+//        packet: packet,
+//        to: info.device
+//    )
+    
+//}
+
+//RunLoop.current.run()
+
+
+
 //let helper = HIDManagerHelper()
-//let scanner = HIDDeviceScanner()
+
 //let tester = HIDReportTester()
 //let outputTester = HIDOutputTester()
 //let monitor = HIDInputMonitor()
@@ -42,14 +128,14 @@ import Foundation
 //
 //    //scanner.printBasicInfo(device: info.device)
 //    //scanner.printAllProperties(device: info.device)
-//    
+//
 //    RGBPacketMap.test(device: info.device)
 //    //RGBPayLoad.start(device: info.device)
-//    
+//
 //    Log.title("Feature Reports")
 //    //tester.readFeatureReport(device: info.device)
-//    
-//    
+//
+//
 //
 //    Log.info("Manufacturer : \(info.manufacturer)")
 //    Log.info("Vendor ID    : \(String(format:"0x%04X", info.vendorID))")
@@ -65,17 +151,17 @@ import Foundation
 //
 //        Log.title("RGB Command Tester")
 //       // rgbTester.test(device: info.device)
-//        
-//        
+//
+//
 //        //commandExplorer.start(device: info.device)
 //        //descriptorReader.start(device: info.device)
 //        // packetExplorer.start(device: info.device)
 //        //Log.title("RGB Packet Testing")
 //        //explorerV3.start(device: info.device)
-//        
+//
 //        Log.title("RGB Handshake")
 //        //handshake.start(device: info.device)
-//        
+//
 //        //protocolExplorer.start(device: info.device)
 //
 //        Log.title("Live Input Monitor")
@@ -92,32 +178,5 @@ import Foundation
 ////pipeExplorer.start()
 //
 //RunLoop.current.run()
-
-
-let helper = HIDManagerHelper()
-let scanner = HIDDeviceScanner()
-let packetMapper = RGBPacketMapper()
-let RGBComman0BExpore = RGBCommandExplorer()
-let handshake = RGBHandshake() // Perfect to start static RGB Light all in Keyboard
-//let packetExplorer = RGBPacketExplorer() // Findout RGB Lights On Packet 04 to 07
-
-let devices = helper.scanDevices()
-
-for (_, info) in devices.enumerated() {
-
-    
-    handshake.start(device: info.device)
-    RGBComman0BExpore.start(device: info.device)
-
-    if info.vendorID == 0xC0F4 &&
-       info.productID == 0x07C0 {
-
-        Log.success("Target RGB Keyboard")
-        //packetExplorer.start(device: info.device)
-       
-    }
-}
-
-RunLoop.current.run()
 
 

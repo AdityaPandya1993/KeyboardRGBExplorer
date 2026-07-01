@@ -35,7 +35,7 @@ final class RGBHandshake {
 
             print(result)
 
-            Thread.sleep(forTimeInterval:0.8)
+            Thread.sleep(forTimeInterval:0.5)
         }
 
         Log.success("Handshake Finished")
